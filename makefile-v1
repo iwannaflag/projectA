@@ -1,0 +1,18 @@
+CC=gcc
+OBJK=./lib/add.o
+OBJK+=./lib/sub.o
+CAL=./lib/libcal.a
+
+
+./lib/add.o:./src/add.c ./include
+	$(CC) -c ./src/add.c -o $@ -I./include
+./lib/sub.o:./src/sub.c ./include
+	$(CC) -c ./src/sub.c -o $@ -I./include
+$(CAL):$(OBJK) 
+	ar rcs $@ $(OBJK)
+main-v1:main.c $(CAL) ./include
+	$(CC) -o $@ main.c -Llib -lcal -Iinclude
+.PHONY:clean
+clean:
+	rm ./lib/*.o
+	rm main-v1
